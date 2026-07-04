@@ -40,7 +40,7 @@ class CustomerRepositoryImpl @Inject constructor(
                 val existing = existingById[freshEntity.id]
 
                 if (existing != null) {
-                    // Preserve locally-owned KYC state; take everything else fresh from network
+
                     freshEntity.copy(
                         kycStatus = existing.kycStatus,
                         selfiePath = existing.selfiePath

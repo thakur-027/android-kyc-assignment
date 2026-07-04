@@ -8,7 +8,7 @@ import com.example.kycbank.domain.repository.IfscRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val IFSC_CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000L // 24 hours — bank/branch data barely changes
+private const val IFSC_CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000L
 
 @Singleton
 class IfscRepositoryImpl @Inject constructor(
@@ -54,7 +54,7 @@ class IfscRepositoryImpl @Inject constructor(
                 address = response.address
             )
         } catch (e: Exception) {
-            // Network failed — fall back to stale cache if we have it, better than nothing
+
             cached?.let {
                 BankBranchInfo(
                     bankName = it.bankName,
