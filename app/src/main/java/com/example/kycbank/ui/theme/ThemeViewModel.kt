@@ -6,10 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-enum class ThemeMode {
-    SYSTEM, LIGHT, DARK
-}
-
 @HiltViewModel
 class ThemeViewModel @Inject constructor() : ViewModel() {
 

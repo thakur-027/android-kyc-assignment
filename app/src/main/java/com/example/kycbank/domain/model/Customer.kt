@@ -32,4 +32,10 @@ data class Customer(
 
     val formattedBalance: String
         get() = "$currency %.2f".format(balance)
+
+    val initials: String
+        get() = "${firstName.firstOrNull() ?: ' '}${lastName.firstOrNull() ?: ' '}".uppercase().trim()
+
+    val displayPhoto: String
+        get() = selfiePath?.let { "file://$it" } ?: avatarUrl
 }

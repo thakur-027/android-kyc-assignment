@@ -2,10 +2,11 @@ package com.example.kycbank.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val BankBlue = Color(0xFF1565D8)
+val BankBlueDark = Color(0xFF0D3E8C)
+val BankBluePale = Color(0xFFB9CDEF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val SuccessGreen = Color(0xFF22A559)
+val SuccessGreenSoft = Color(0xFFDFF5E1)
+val WarningAmber = Color(0xFF9B6B00)
+val WarningAmberSoft = Color(0xFFFFEFD1)

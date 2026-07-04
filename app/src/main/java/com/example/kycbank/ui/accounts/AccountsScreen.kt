@@ -66,7 +66,7 @@ fun AccountsScreen(
         ) {
             Column {
                 Text(
-                    text = "Digital Bank",
+                    text = "Signzy - KYC",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )

@@ -2,6 +2,7 @@ package com.example.kycbank.ui.accounts.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,10 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,9 +26,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.example.kycbank.domain.model.Customer
 import com.example.kycbank.domain.model.KycStatus
+import com.example.kycbank.ui.theme.SuccessGreenSoft
+import com.example.kycbank.ui.theme.SuccessGreen
+import com.example.kycbank.ui.theme.WarningAmber
+import com.example.kycbank.ui.theme.WarningAmberSoft
 
 @Composable
 fun CustomerCard(
@@ -45,14 +52,7 @@ fun CustomerCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
             ) {
-                AsyncImage(
-                    model = customer.avatarUrl,
-                    contentDescription = "${customer.fullName} avatar",
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFE5E5EA))
-                )
+                CustomerAvatar(customer = customer, size = 36.dp)
                 KycStatusBadge(status = customer.kycStatus)
             }
 
@@ -81,10 +81,7 @@ fun CustomerCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 10.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF1565D8)
-                    )
+                    shape = RoundedCornerShape(8.dp)
                 ) {
                     Text("Do KYC", fontSize = 13.sp)
                 }
@@ -94,18 +91,67 @@ fun CustomerCard(
 }
 
 @Composable
-private fun KycStatusBadge(status: KycStatus) {
-    val (bg, textColor, label) = when (status) {
-        KycStatus.VERIFIED -> Triple(Color(0xFFDFF5E1), Color(0xFF1E7A32), "VERIFIED")
-        KycStatus.PENDING -> Triple(Color(0xFFFFEFD1), Color(0xFF9B6B00), "PENDING")
+fun CustomerAvatar(customer: Customer, size: androidx.compose.ui.unit.Dp) {
+    val palette = listOf(
+        Color(0xFFE3EDFB), Color(0xFFE8F6EC), Color(0xFFFFF3E0), Color(0xFFF3E8FD)
+    )
+    val bgColor = palette[customer.id.hashCode().mod(palette.size)]
+
+    SubcomposeAsyncImage(
+        model = customer.displayPhoto,
+        contentDescription = "${customer.fullName} photo",
+        modifier = Modifier
+            .size(size)
+            .clip(CircleShape),
+        loading = { InitialsFallback(customer, size, bgColor) },
+        error = { InitialsFallback(customer, size, bgColor) }
+    )
+}
+
+@Composable
+private fun InitialsFallback(customer: Customer, size: androidx.compose.ui.unit.Dp, bgColor: Color) {
+    Box(
+        modifier = Modifier
+            .size(size)
+            .clip(CircleShape)
+            .background(bgColor),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = customer.initials,
+            fontSize = (size.value / 2.4).sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
-    Text(
-        text = label,
-        color = textColor,
-        fontSize = 9.sp,
-        fontWeight = FontWeight.Bold,
+}
+
+@Composable
+private fun KycStatusBadge(status: KycStatus) {
+    val (bg, fg, label) = when (status) {
+        KycStatus.VERIFIED -> Triple(SuccessGreenSoft, SuccessGreen, "VERIFIED")
+        KycStatus.PENDING -> Triple(WarningAmberSoft, WarningAmber, "PENDING")
+    }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .background(bg, RoundedCornerShape(6.dp))
             .padding(horizontal = 6.dp, vertical = 3.dp)
-    )
+    ) {
+        if (status == KycStatus.VERIFIED) {
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = null,
+                tint = fg,
+                modifier = Modifier.size(10.dp)
+            )
+            androidx.compose.foundation.layout.Spacer(modifier = Modifier.padding(end = 2.dp))
+        }
+        Text(
+            text = label,
+            color = fg,
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
 }
