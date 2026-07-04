@@ -1,6 +1,7 @@
 package com.example.kycbank.data.mapper
 
 import com.example.kycbank.data.remote.dummyjson.dto.UserDto
+import com.example.kycbank.domain.model.AccountType
 import com.example.kycbank.domain.model.Customer
 import com.example.kycbank.domain.model.KycStatus
 import kotlin.random.Random
@@ -26,6 +27,7 @@ fun UserDto.toCustomer(): Customer {
         kycStatus = KycStatus.PENDING,
         branchInfo = null,
         ifsc = ifscCodes.random(),
-        accountNumber = bank.iban
+        accountNumber = bank.iban,
+        accountType = AccountType.entries.random()
     )
 }

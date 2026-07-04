@@ -2,11 +2,10 @@ package com.example.kycbank.domain.usecase
 
 import com.example.kycbank.domain.model.Customer
 import com.example.kycbank.domain.repository.CustomerRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetCustomersUseCase @Inject constructor(
+class GetCustomerDetailUseCase @Inject constructor(
     private val repository: CustomerRepository
 ) {
-    suspend operator fun invoke(): Flow<List<Customer>> = repository.getCustomers()
+    suspend operator fun invoke(customerId: String): Customer? = repository.getCustomerById(customerId)
 }

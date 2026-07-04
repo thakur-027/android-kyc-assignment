@@ -3,8 +3,9 @@ package com.example.kycbank.ui.details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kycbank.domain.repository.CustomerRepository
-import com.example.kycbank.domain.repository.IfscRepository
+import com.example.kycbank.domain.usecase.CompleteKycUseCase
+import com.example.kycbank.domain.usecase.GetCustomerDetailUseCase
+import com.example.kycbank.domain.usecase.ResolveIfscUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,8 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val customerRepository: CustomerRepository,
-    private val ifscRepository: IfscRepository,
+    private val getCustomerDetailUseCase: GetCustomerDetailUseCase,
+    private val resolveIfscUseCase: ResolveIfscUseCase,
+    private val completeKycUseCase: CompleteKycUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -30,7 +32,7 @@ class DetailsViewModel @Inject constructor(
     private fun loadCustomer() {
         viewModelScope.launch {
             _uiState.value = DetailsUiState.Loading
-            val customer = customerRepository.getCustomerById(customerId)
+            val customer = getCustomerDetailUseCase(customerId)
             if (customer == null) {
                 _uiState.value = DetailsUiState.Error("Customer not found")
             } else {
@@ -45,7 +47,7 @@ class DetailsViewModel @Inject constructor(
 
     private fun resolveBranchInfo(ifsc: String) {
         viewModelScope.launch {
-            val result = ifscRepository.getBranchInfo(ifsc)
+            val result = resolveIfscUseCase(ifsc)
             val currentState = _uiState.value
             if (currentState is DetailsUiState.Success) {
                 _uiState.value = currentState.copy(
@@ -61,7 +63,7 @@ class DetailsViewModel @Inject constructor(
 
     fun onKycCompleted(selfiePath: String) {
         viewModelScope.launch {
-            val success = customerRepository.verifyCustomer(customerId, selfiePath)
+            val success = completeKycUseCase(customerId, selfiePath)
             if (success) {
                 loadCustomer()
             } else {

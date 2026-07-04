@@ -5,7 +5,10 @@ sealed interface AccountsUiState {
 
     data object Loading : AccountsUiState
 
-    data class Success(val customers: List<Customer>) : AccountsUiState
+    data class Success(
+        val customers: List<Customer>,
+        val hasMore: Boolean
+    ) : AccountsUiState
 
     data class Error(val message: String) : AccountsUiState
 }

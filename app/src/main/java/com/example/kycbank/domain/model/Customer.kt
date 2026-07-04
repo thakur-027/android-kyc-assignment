@@ -21,7 +21,8 @@ data class Customer(
     val kycStatus: KycStatus,
     val branchInfo: BankBranchInfo?,
     val ifsc: String,
-    val accountNumber: String
+    val accountNumber: String,
+    val accountType: AccountType
 ) {
     val fullName: String
         get() = "$firstName $lastName"
@@ -30,5 +31,5 @@ data class Customer(
         get() = maskAccountNumber(accountNumber)
 
     val formattedBalance: String
-        get() = "$currency $balance"
+        get() = "$currency %.2f".format(balance)
 }

@@ -3,6 +3,7 @@ package com.example.kycbank.di
 import android.content.Context
 import androidx.room.Room
 import com.example.kycbank.data.local.CustomerDao
+import com.example.kycbank.data.local.IfscCacheDao
 import com.example.kycbank.data.local.KycBankDatabase
 import dagger.Module
 import dagger.Provides
@@ -22,12 +23,20 @@ object DatabaseModule {
             context,
             KycBankDatabase::class.java,
             "kycbank.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration(true)
+            .build()
     }
 
     @Provides
     @Singleton
     fun provideCustomerDao(database: KycBankDatabase): CustomerDao {
         return database.customerDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideIfscCacheDao(database: KycBankDatabase): IfscCacheDao {
+        return database.ifscCacheDao()
     }
 }

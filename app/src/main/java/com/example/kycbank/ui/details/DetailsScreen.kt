@@ -58,7 +58,7 @@ fun DetailsScreen(
                 ) {
                     KycProfileSection(customer = state.customer)
                     Spacer(modifier = Modifier.height(16.dp))
-                    BankInfoSection(branchInfoState = state.branchInfoState)
+                    BankInfoSection(branchInfoState = state.branchInfoState, ifsc = state.customer.ifsc)
                     Spacer(modifier = Modifier.height(16.dp))
                     if (state.customer.kycStatus == KycStatus.PENDING) {
                         Button(onClick = { navController.navigate("camera/${state.customer.id}") }) {

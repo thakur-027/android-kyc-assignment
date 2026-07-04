@@ -3,7 +3,6 @@ package com.example.kycbank.data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity(tableName = "customers")
 data class CustomerEntity(
     @PrimaryKey val id: String,
@@ -17,10 +16,10 @@ data class CustomerEntity(
     val dob: String,
     val phoneNo: String,
     val nationality: String,
-
     val balance: Double,
     val currency: String,
     val address: String,
     val ifsc: String,
-    val accountNumber: String
+    val accountNumber: String,
+    val accountType: String
 )

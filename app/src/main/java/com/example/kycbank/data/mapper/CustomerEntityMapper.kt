@@ -1,6 +1,7 @@
 package com.example.kycbank.data.mapper
 
 import com.example.kycbank.data.local.CustomerEntity
+import com.example.kycbank.domain.model.AccountType
 import com.example.kycbank.domain.model.Customer
 import com.example.kycbank.domain.model.KycStatus
 
@@ -10,7 +11,7 @@ fun Customer.toEntity(): CustomerEntity {
         firstName = firstName,
         lastName = lastName,
         email = email,
-        kycStatus = kycStatus.name,  // enum -> String
+        kycStatus = kycStatus.name,
         lastFetchedAt = System.currentTimeMillis(),
         avatarUrl = avatarUrl,
         selfiePath = selfiePath,
@@ -21,7 +22,8 @@ fun Customer.toEntity(): CustomerEntity {
         currency = currency,
         address = address,
         ifsc = ifsc,
-        accountNumber = accountNumber
+        accountNumber = accountNumber,
+        accountType = accountType.name
     )
 }
 
@@ -42,6 +44,7 @@ fun CustomerEntity.toDomain(): Customer {
         address = address,
         ifsc = ifsc,
         branchInfo = null,
-        accountNumber = accountNumber
+        accountNumber = accountNumber,
+        accountType = AccountType.valueOf(accountType)
     )
 }
