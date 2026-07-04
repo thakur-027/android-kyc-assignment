@@ -57,7 +57,22 @@ Build and run on an emulator or physical device with API 24+. Camera capture obv
 
 ## Screenshots
 
-*(add screenshots or a screen recording here)*
+<img width="187" height="404" alt="sample_completed" src="https://github.com/user-attachments/assets/89b307ee-7161-4baa-919e-30ec18afd10e" />
+
+<img width="186" height="401" alt="completed_kycs" src="https://github.com/user-attachments/assets/af001904-e453-4e95-8b3f-f9b7dfb8a987" />
+
+<img width="187" height="404" alt="sample_kyc_acc" src="https://github.com/user-attachments/assets/860a0f66-ddbf-44c5-83e9-78352f7e6b53" />
+
+<img width="186" height="405" alt="pending_kycs" src="https://github.com/user-attachments/assets/77ff4db8-a66a-4fce-b85f-0d37b3bfabea" />
+
+
+## Demo Video
+
+https://drive.google.com/file/d/1QBk0zMnOngnbjl6Hw2eFlSHWJD5DMoqQ/view?usp=sharing
+
+
+
+
 
 ## Known limitations / possible improvements
 
