@@ -72,8 +72,6 @@ https://drive.google.com/file/d/1QBk0zMnOngnbjl6Hw2eFlSHWJD5DMoqQ/view?usp=shari
 
 
 
-
-
 ## Known limitations / possible improvements
 
 - IFSC codes are seeded from a small fixed list rather than being genuinely tied to each customer's actual bank — DummyJSON doesn't provide real Indian IFSC data, so this was the practical way to demo live IFSC resolution.
