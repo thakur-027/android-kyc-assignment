@@ -20,6 +20,8 @@ interface CustomerDao {
     @Query("SELECT * FROM customers WHERE id = :id")
     suspend fun getCustomerById(id: String): CustomerEntity?
 
+
+
     @Query("SELECT * FROM customers")
     suspend fun getAllCustomersOnce(): List<CustomerEntity>
 }
